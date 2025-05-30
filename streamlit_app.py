@@ -288,7 +288,7 @@ if st.session_state.videos_to_process:
             if status == "pending":
                 if st.button(f"▶️ Start Download", key=f"start_dl_{video_id}_{index}"): # Changed button text and key
                     st.session_state.download_status[video_id] = {"status": "processing"}
-                    st.experimental_rerun()
+                    st.rerun()
             elif status == "completed" and file_path_or_msg and os.path.exists(file_path_or_msg):
                 with open(file_path_or_msg, "rb") as fp:
                     st.download_button(
@@ -317,7 +317,7 @@ if st.session_state.videos_to_process:
                         st.session_state.download_status[video_id] = {"status": "completed", "path": downloaded_file_server_path}
                     else:
                         st.session_state.download_status[video_id] = {"status": "failed", "path": "Server download failed."}
-                    st.experimental_rerun() # Rerun to update button to "Download File" or show error
+                    st.rerun() # Rerun to update button to "Download File" or show error
             elif status == "failed":
                 st.error(f"Failed: {file_path_or_msg or 'Unknown error'}")
             elif status == "completed" and not (file_path_or_msg and os.path.exists(file_path_or_msg)):
@@ -349,7 +349,7 @@ if st.sidebar.button("🧹 Clean Server Download Directory", key="clean_dir"):
             st.sidebar.info(f"`{DOWNLOAD_DIR}` is already empty or no files to clean.")
         # Reset download statuses as files are gone
         st.session_state.download_status = {}
-        st.experimental_rerun()
+        st.rerun()
     else:
         st.sidebar.info(f"Directory `{DOWNLOAD_DIR}` does not exist on the server.")
 
